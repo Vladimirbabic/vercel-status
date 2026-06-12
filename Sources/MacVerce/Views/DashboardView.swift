@@ -12,8 +12,10 @@ struct DashboardView: View {
 
     @ObservedObject var settings: AppSettings
     @ObservedObject var monitor: DeploymentMonitor
+    @ObservedObject var updateChecker: UpdateChecker
 
     let refresh: () -> Void
+    let checkForUpdates: () -> Void
     let openSettings: () -> Void
     let quit: () -> Void
 
@@ -128,6 +130,12 @@ struct DashboardView: View {
     private var footer: some View {
         HStack(spacing: 14) {
             FooterIconButton(systemName: "gearshape", help: "Settings", action: openSettings)
+            FooterIconButton(
+                systemName: updateChecker.isChecking ? "hourglass" : "arrow.down.circle",
+                help: "Check for Updates",
+                isDisabled: updateChecker.isChecking,
+                action: checkForUpdates
+            )
 
             Spacer()
 
@@ -330,16 +338,18 @@ private struct PanelPillButton: View {
 private struct FooterIconButton: View {
     let systemName: String
     let help: String
+    var isDisabled = false
     let action: () -> Void
 
     var body: some View {
         Button(action: action) {
             Image(systemName: systemName)
                 .font(.system(size: 17, weight: .semibold))
-                .foregroundStyle(PanelTheme.secondaryText)
+                .foregroundStyle(isDisabled ? PanelTheme.disabledControl : PanelTheme.secondaryText)
                 .frame(width: 30, height: 30)
         }
         .buttonStyle(.plain)
+        .disabled(isDisabled)
         .help(help)
     }
 }

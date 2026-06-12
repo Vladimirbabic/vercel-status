@@ -9,6 +9,7 @@ final class StatusPanelController: NSObject, NSWindowDelegate {
 
     private let settings: AppSettings
     private let monitor: DeploymentMonitor
+    private let updateChecker: UpdateChecker
     private let refresh: () -> Void
     private let openSettings: () -> Void
     private let quit: () -> Void
@@ -22,12 +23,14 @@ final class StatusPanelController: NSObject, NSWindowDelegate {
     init(
         settings: AppSettings,
         monitor: DeploymentMonitor,
+        updateChecker: UpdateChecker,
         refresh: @escaping () -> Void,
         openSettings: @escaping () -> Void,
         quit: @escaping () -> Void
     ) {
         self.settings = settings
         self.monitor = monitor
+        self.updateChecker = updateChecker
         self.refresh = refresh
         self.openSettings = openSettings
         self.quit = quit
@@ -186,7 +189,11 @@ final class StatusPanelController: NSObject, NSWindowDelegate {
         let rootView = DashboardView(
             settings: settings,
             monitor: monitor,
+            updateChecker: updateChecker,
             refresh: refresh,
+            checkForUpdates: { [weak self] in
+                self?.checkForUpdates()
+            },
             openSettings: { [weak self] in
                 self?.hidePanel()
                 self?.openSettings()
@@ -248,6 +255,11 @@ final class StatusPanelController: NSObject, NSWindowDelegate {
         refreshItem.target = self
         menu.addItem(refreshItem)
 
+        let updateItem = NSMenuItem(title: "Check for Updates...", action: #selector(checkForUpdatesFromMenu), keyEquivalent: "")
+        updateItem.target = self
+        updateItem.isEnabled = !updateChecker.isChecking
+        menu.addItem(updateItem)
+
         menu.addItem(.separator())
 
         let settingsItem = NSMenuItem(title: "Settings...", action: #selector(settingsFromMenu), keyEquivalent: ",")
@@ -273,9 +285,50 @@ final class StatusPanelController: NSObject, NSWindowDelegate {
         refresh()
     }
 
+    @objc private func checkForUpdatesFromMenu() {
+        checkForUpdates()
+    }
+
     @objc private func settingsFromMenu() {
         hidePanel()
         openSettings()
+    }
+
+    private func checkForUpdates() {
+        guard !updateChecker.isChecking else { return }
+
+        Task { @MainActor in
+            let result = await updateChecker.checkForUpdates()
+            showUpdateResult(result)
+        }
+    }
+
+    private func showUpdateResult(_ result: UpdateCheckResult) {
+        let alert = NSAlert()
+        alert.alertStyle = .informational
+
+        switch result {
+        case let .available(release):
+            alert.messageText = "Mac Verce \(release.version) is available"
+            alert.informativeText = "You are running \(updateChecker.currentVersion). Open the GitHub release to download the latest build."
+            alert.addButton(withTitle: "Open Release")
+            alert.addButton(withTitle: "Later")
+
+            if alert.runModal() == .alertFirstButtonReturn {
+                NSWorkspace.shared.open(release.pageURL)
+            }
+        case let .upToDate(version):
+            alert.messageText = "Mac Verce is up to date"
+            alert.informativeText = "You are running version \(version)."
+            alert.addButton(withTitle: "OK")
+            alert.runModal()
+        case let .failed(message):
+            alert.alertStyle = .warning
+            alert.messageText = "Update check failed"
+            alert.informativeText = message
+            alert.addButton(withTitle: "OK")
+            alert.runModal()
+        }
     }
 
     private func installClickMonitor() {

@@ -2,6 +2,8 @@
 
 Mac Verce is a native macOS menu bar app for watching Vercel deployments. It polls the Vercel REST API, shows a compact deployment indicator in the menu bar, and displays a top-center notch island toast whenever a deployment reaches `READY`.
 
+The menu bar panel includes manual refresh, settings, launch-at-login preferences, and a GitHub Releases update check.
+
 ## Build
 
 ```sh
@@ -21,3 +23,5 @@ open .build/MacVerce.app
 Open the menu bar item, choose Settings, then paste a Vercel access token. Team ID and Project ID are optional. When Team ID is blank, Mac Verce lists personal deployments plus deployments from every team returned by `GET /v2/teams`. If Team ID is filled, it only watches that team.
 
 The app uses `GET https://api.vercel.com/v6/deployments` with `Authorization: Bearer <token>`. Vercel documents team scoping with the `teamId` query parameter in the REST API reference: https://vercel.com/docs/rest-api
+
+The Vercel token is stored in the macOS Keychain. Developer builds that used ad-hoc signing may create a legacy keychain entry; notarized releases avoid interactive keychain prompts for that legacy item.
