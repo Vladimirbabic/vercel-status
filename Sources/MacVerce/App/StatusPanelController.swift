@@ -6,6 +6,7 @@ final class StatusPanelController: NSObject, NSWindowDelegate {
     private static let panelWidth: CGFloat = 420
     private static let panelHeight: CGFloat = 540
     private static let panelScreenMargin: CGFloat = 8
+    private static let loaderBarCount = 5
 
     private let settings: AppSettings
     private let monitor: DeploymentMonitor
@@ -80,18 +81,17 @@ final class StatusPanelController: NSObject, NSWindowDelegate {
     private func renderLoaderTitle() {
         guard let button = statusItem.button else { return }
 
-        let bars = 10
         let title = NSMutableAttributedString()
-        for index in 0..<bars {
-            let distance = (index - loaderTick + bars) % bars
+        for index in 0..<Self.loaderBarCount {
+            let distance = (index - loaderTick + Self.loaderBarCount) % Self.loaderBarCount
             let alpha: CGFloat
 
             switch distance {
             case 0:
                 alpha = 1
-            case 1, bars - 1:
+            case 1, Self.loaderBarCount - 1:
                 alpha = 0.72
-            case 2, bars - 2:
+            case 2, Self.loaderBarCount - 2:
                 alpha = 0.44
             default:
                 alpha = 0.2
@@ -99,10 +99,10 @@ final class StatusPanelController: NSObject, NSWindowDelegate {
 
             title.append(
                 NSAttributedString(
-                    string: "|",
+                    string: "▌",
                     attributes: [
                         .foregroundColor: monitor.menuBarColor.withAlphaComponent(alpha),
-                        .font: NSFont.monospacedSystemFont(ofSize: 14, weight: .bold)
+                        .font: NSFont.systemFont(ofSize: 13, weight: .bold)
                     ]
                 )
             )
@@ -119,7 +119,7 @@ final class StatusPanelController: NSObject, NSWindowDelegate {
         loaderTimer = Timer.scheduledTimer(withTimeInterval: 0.14, repeats: true) { [weak self] _ in
             Task { @MainActor in
                 guard let self else { return }
-                self.loaderTick = (self.loaderTick + 1) % 10
+                self.loaderTick = (self.loaderTick + 1) % Self.loaderBarCount
                 self.renderLoaderTitle()
             }
         }

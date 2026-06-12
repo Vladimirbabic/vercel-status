@@ -6,23 +6,23 @@
         <description>Release feed for Mac Verce.</description>
         <language>en</language>
         <item>
-            <title>Mac Verce 0.1.4</title>
+            <title>Mac Verce 0.1.5</title>
             <description><![CDATA[
-                <p>Mac Verce 0.1.4 refines the dropdown and production deployment links.</p>
+                <p>Mac Verce 0.1.5 tightens the menu bar building indicator.</p>
                 <ul>
-                    <li>Adds the Mac Verce icon to the dropdown header and context menu.</li>
-                    <li>Switches the panel to a black, Vercel-style monochrome interface.</li>
-                    <li>Production deployments now prefer production/custom aliases over preview deployment URLs.</li>
+                    <li>Reduces the deployment-in-progress indicator from 10 bars to 5.</li>
+                    <li>Uses a denser bar glyph with smaller visual gaps.</li>
+                    <li>Keeps the animation cycle aligned with the shorter indicator.</li>
                 </ul>
             ]]></description>
-            <pubDate>Fri, 12 Jun 2026 17:06:44 +0000</pubDate>
-            <sparkle:version>5</sparkle:version>
-            <sparkle:shortVersionString>0.1.4</sparkle:shortVersionString>
+            <pubDate>Fri, 12 Jun 2026 21:21:25 +0000</pubDate>
+            <sparkle:version>6</sparkle:version>
+            <sparkle:shortVersionString>0.1.5</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
             <enclosure
-                url="https://github.com/Vladimirbabic/vercel-status/releases/download/v0.1.4/MacVerce-v0.1.4.zip"
-                sparkle:edSignature="woaBFRFQFxcMJy1h/lHv1GM4pwofuOeoobTjdongoYiiXgOEaWpkZKpHVXBjOZb1Xr0j64iCJ0/g2hjpyKDDAw=="
-                length="3313781"
+                url="https://github.com/Vladimirbabic/vercel-status/releases/download/v0.1.5/MacVerce-v0.1.5.zip"
+                sparkle:edSignature="ML3kmwAbD99EIknJOyVtAjZZvRN8qZzOsDpTIfu1wz4e9b3yHnB9zVgSO5m/mmq1ItI2vvvAuXTANfJbv8kjDA=="
+                length="3313830"
                 type="application/octet-stream" />
         </item>
     </channel>
