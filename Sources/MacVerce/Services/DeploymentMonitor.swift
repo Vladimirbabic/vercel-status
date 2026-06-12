@@ -82,7 +82,7 @@ final class DeploymentMonitor: ObservableObject {
         case .needsConfiguration:
             return .secondaryLabelColor
         case .refreshing where deployments.isEmpty:
-            return .systemBlue
+            return .labelColor
         case .failed:
             return .systemRed
         case .idle, .refreshing:

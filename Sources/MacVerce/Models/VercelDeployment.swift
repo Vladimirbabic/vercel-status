@@ -87,6 +87,7 @@ struct VercelDeployment: Identifiable, Equatable, Sendable {
     let id: String
     let name: String
     let url: String?
+    let productionURL: String?
     let state: DeploymentState
     let target: String?
     let createdAt: Date
@@ -95,12 +96,24 @@ struct VercelDeployment: Identifiable, Equatable, Sendable {
     let scopeName: String?
 
     var displayURL: String {
-        url ?? "Deployment URL pending"
+        preferredURLHost ?? "Deployment URL pending"
     }
 
     var publicURL: URL? {
-        guard let url, !url.isEmpty else { return nil }
+        guard let url = preferredURLHost, !url.isEmpty else { return nil }
         return URL(string: "https://\(url)")
+    }
+
+    var isProduction: Bool {
+        target?.lowercased() == "production"
+    }
+
+    private var preferredURLHost: String? {
+        if isProduction, let productionURL, !productionURL.isEmpty {
+            return productionURL
+        }
+
+        return url
     }
 
     func scoped(to scopeName: String?) -> VercelDeployment {
@@ -108,6 +121,22 @@ struct VercelDeployment: Identifiable, Equatable, Sendable {
             id: id,
             name: name,
             url: url,
+            productionURL: productionURL,
+            state: state,
+            target: target,
+            createdAt: createdAt,
+            creator: creator,
+            projectID: projectID,
+            scopeName: scopeName
+        )
+    }
+
+    func withProductionURL(_ productionURL: String?) -> VercelDeployment {
+        VercelDeployment(
+            id: id,
+            name: name,
+            url: url,
+            productionURL: productionURL,
             state: state,
             target: target,
             createdAt: createdAt,

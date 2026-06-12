@@ -6,23 +6,23 @@
         <description>Release feed for Mac Verce.</description>
         <language>en</language>
         <item>
-            <title>Mac Verce 0.1.3</title>
+            <title>Mac Verce 0.1.4</title>
             <description><![CDATA[
-                <p>Mac Verce 0.1.3 replaces the GitHub release-link checker with Sparkle automatic updates.</p>
+                <p>Mac Verce 0.1.4 refines the dropdown and production deployment links.</p>
                 <ul>
-                    <li>Embeds Sparkle 2.9.3 for real update download and installation.</li>
-                    <li>Enables automatic update checks and automatic installation.</li>
-                    <li>Uses a signed appcast feed with EdDSA update verification.</li>
+                    <li>Adds the Mac Verce icon to the dropdown header and context menu.</li>
+                    <li>Switches the panel to a black, Vercel-style monochrome interface.</li>
+                    <li>Production deployments now prefer production/custom aliases over preview deployment URLs.</li>
                 </ul>
             ]]></description>
-            <pubDate>Fri, 12 Jun 2026 17:01:50 +0000</pubDate>
-            <sparkle:version>4</sparkle:version>
-            <sparkle:shortVersionString>0.1.3</sparkle:shortVersionString>
+            <pubDate>Fri, 12 Jun 2026 17:06:44 +0000</pubDate>
+            <sparkle:version>5</sparkle:version>
+            <sparkle:shortVersionString>0.1.4</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
             <enclosure
-                url="https://github.com/Vladimirbabic/vercel-status/releases/download/v0.1.3/MacVerce-v0.1.3.zip"
-                sparkle:edSignature="ac+0d90JHOakigGT3GraKv4+s0pXjrQ6qNmJ9CdFd1QFA4ORKdan2XYNjUZ5PcMZQ/sM0o1wYQXctZtAGwK3CQ=="
-                length="3300433"
+                url="https://github.com/Vladimirbabic/vercel-status/releases/download/v0.1.4/MacVerce-v0.1.4.zip"
+                sparkle:edSignature="woaBFRFQFxcMJy1h/lHv1GM4pwofuOeoobTjdongoYiiXgOEaWpkZKpHVXBjOZb1Xr0j64iCJ0/g2hjpyKDDAw=="
+                length="3313781"
                 type="application/octet-stream" />
         </item>
     </channel>

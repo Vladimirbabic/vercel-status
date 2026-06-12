@@ -111,7 +111,83 @@ struct VercelAPIClient {
             url: url,
             token: configuration.token
         )
-        return response.deployments.map { $0.deployment.scoped(to: scopeName) }
+        let deployments = response.deployments.map { $0.deployment.scoped(to: scopeName) }
+        return try await deploymentsWithProductionAliases(
+            deployments,
+            configuration: configuration,
+            teamID: teamID
+        )
+    }
+
+    private func deploymentsWithProductionAliases(
+        _ deployments: [VercelDeployment],
+        configuration: VercelConfiguration,
+        teamID: String?
+    ) async throws -> [VercelDeployment] {
+        var resolvedDeployments: [VercelDeployment] = []
+        resolvedDeployments.reserveCapacity(deployments.count)
+
+        for deployment in deployments {
+            guard deployment.state == .ready, deployment.isProduction else {
+                resolvedDeployments.append(deployment)
+                continue
+            }
+
+            do {
+                let aliases = try await listDeploymentAliases(
+                    deploymentID: deployment.id,
+                    configuration: configuration,
+                    teamID: teamID
+                )
+                resolvedDeployments.append(
+                    deployment.withProductionURL(preferredProductionAlias(from: aliases, fallbackURL: deployment.url))
+                )
+            } catch {
+                resolvedDeployments.append(deployment)
+            }
+        }
+
+        return resolvedDeployments
+    }
+
+    private func listDeploymentAliases(
+        deploymentID: String,
+        configuration: VercelConfiguration,
+        teamID: String?
+    ) async throws -> [String] {
+        var components = URLComponents(string: "https://api.vercel.com/v2/deployments/\(deploymentID)/aliases")
+
+        if let teamID, !teamID.isEmpty {
+            components?.queryItems = [
+                URLQueryItem(name: "teamId", value: teamID)
+            ]
+        }
+
+        guard let url = components?.url else {
+            throw VercelAPIError.invalidURL
+        }
+
+        let response: ListDeploymentAliasesResponse = try await send(
+            url: url,
+            token: configuration.token
+        )
+        return response.aliases.map(\.alias)
+    }
+
+    private func preferredProductionAlias(from aliases: [String], fallbackURL: String?) -> String? {
+        let cleanedAliases = aliases
+            .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
+            .filter { !$0.isEmpty && $0 != fallbackURL }
+
+        if let customDomain = cleanedAliases.first(where: { !$0.hasSuffix(".vercel.app") }) {
+            return customDomain
+        }
+
+        if let stableVercelAlias = cleanedAliases.first(where: { !$0.contains("-git-") }) {
+            return stableVercelAlias
+        }
+
+        return cleanedAliases.first ?? fallbackURL
     }
 
     private func send<Response: Decodable>(url: URL, token: String) async throws -> Response {
@@ -146,6 +222,14 @@ struct VercelAPIClient {
 
 private struct ListDeploymentsResponse: Decodable {
     let deployments: [DeploymentDTO]
+}
+
+private struct ListDeploymentAliasesResponse: Decodable {
+    let aliases: [AliasDTO]
+}
+
+private struct AliasDTO: Decodable {
+    let alias: String
 }
 
 private struct ListTeamsResponse: Decodable {
@@ -197,6 +281,7 @@ private struct DeploymentDTO: Decodable {
             id: uid,
             name: name ?? "Unnamed deployment",
             url: url,
+            productionURL: nil,
             state: DeploymentState(apiValue: state),
             target: target,
             createdAt: date(from: createdAt ?? created),

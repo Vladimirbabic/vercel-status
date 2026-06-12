@@ -47,18 +47,23 @@ struct DashboardView: View {
     }
 
     private var header: some View {
-        HStack(spacing: 18) {
-            Image(systemName: statusSymbolName)
-                .font(.system(size: 20, weight: .semibold))
-                .foregroundStyle(Color(nsColor: monitor.menuBarColor))
+        HStack(spacing: 14) {
+            AppIconView()
                 .frame(width: Metrics.iconColumnWidth)
 
-            VStack(alignment: .leading, spacing: 2) {
-                Text("Vercel")
-                    .font(.system(size: 16, weight: .bold))
-                    .foregroundStyle(PanelTheme.primaryText)
+            VStack(alignment: .leading, spacing: 3) {
+                HStack(spacing: 7) {
+                    Text("Mac Verce")
+                        .font(.system(size: 16, weight: .bold))
+                        .foregroundStyle(PanelTheme.primaryText)
+
+                    Circle()
+                        .fill(Color(nsColor: monitor.menuBarColor))
+                        .frame(width: 7, height: 7)
+                }
+
                 Text(headerSubtitle)
-                    .font(.system(size: 12, weight: .semibold))
+                    .font(.system(size: 12, weight: .medium))
                     .foregroundStyle(PanelTheme.secondaryText)
                     .lineLimit(1)
             }
@@ -158,19 +163,6 @@ struct DashboardView: View {
         .padding(.horizontal, 20)
     }
 
-    private var statusSymbolName: String {
-        switch monitor.status {
-        case .needsConfiguration:
-            "key.fill"
-        case .refreshing:
-            "arrow.triangle.2.circlepath"
-        case .failed:
-            "exclamationmark.triangle.fill"
-        case .idle:
-            monitor.deployments.first?.state.symbolName ?? "shippingbox"
-        }
-    }
-
     private var emptyDeploymentsSubtitle: String {
         switch monitor.status {
         case let .failed(message):
@@ -224,7 +216,7 @@ private struct DeploymentRowView: View {
         let scope = deployment.scopeName
         let target = deployment.target?.uppercased()
         let age = relativeTime(for: deployment.createdAt)
-        let url = deployment.url ?? deployment.state.title
+        let url = deployment.displayURL
 
         return [scope, target, age, url]
             .compactMap { $0 }
@@ -235,7 +227,7 @@ private struct DeploymentRowView: View {
     private var actionTint: Color {
         switch deployment.state {
         case .ready:
-            PanelTheme.accent
+            PanelTheme.primaryText
         case .building, .initializing, .queued:
             Color(nsColor: .systemYellow)
         case .error:
@@ -313,6 +305,28 @@ private struct PanelRowView: View {
     }
 }
 
+private struct AppIconView: View {
+    var body: some View {
+        Group {
+            if let image = NSImage(named: "MacVerce") ?? NSApp.applicationIconImage {
+                Image(nsImage: image)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+            } else {
+                Image(systemName: "triangle.fill")
+                    .font(.system(size: 22, weight: .semibold))
+                    .foregroundStyle(PanelTheme.primaryText)
+            }
+        }
+        .frame(width: 34, height: 34)
+        .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
+        .overlay(
+            RoundedRectangle(cornerRadius: 8, style: .continuous)
+                .stroke(PanelTheme.border, lineWidth: 1)
+        )
+    }
+}
+
 private struct PanelPillButton: View {
     let systemName: String
     let help: String
@@ -323,11 +337,15 @@ private struct PanelPillButton: View {
         Button(action: action) {
             Image(systemName: systemName)
                 .font(.system(size: 14, weight: .bold))
-                .foregroundStyle(.white)
-                .frame(width: 48, height: 30)
+                .foregroundStyle(tint)
+                .frame(width: 42, height: 30)
                 .background(
                     Capsule()
-                        .fill(tint)
+                        .fill(PanelTheme.control)
+                        .overlay(
+                            Capsule()
+                                .stroke(PanelTheme.border, lineWidth: 1)
+                        )
                 )
         }
         .buttonStyle(.plain)
@@ -363,13 +381,14 @@ private struct PanelDivider: View {
 }
 
 private enum PanelTheme {
-    static let background = Color(red: 0.13, green: 0.12, blue: 0.15)
-    static let border = Color.white.opacity(0.18)
-    static let divider = Color.white.opacity(0.1)
-    static let primaryText = Color.white.opacity(0.88)
+    static let background = Color.black
+    static let border = Color.white.opacity(0.14)
+    static let divider = Color.white.opacity(0.08)
+    static let primaryText = Color.white.opacity(0.92)
     static let secondaryText = Color.white.opacity(0.56)
-    static let icon = Color.white.opacity(0.82)
-    static let accent = Color(red: 0.21, green: 0.48, blue: 0.94)
-    static let disabledControl = Color.white.opacity(0.24)
-    static let footerButton = Color.white.opacity(0.12)
+    static let icon = Color.white.opacity(0.86)
+    static let accent = Color.white.opacity(0.9)
+    static let control = Color.white.opacity(0.07)
+    static let disabledControl = Color.white.opacity(0.22)
+    static let footerButton = Color.white.opacity(0.08)
 }

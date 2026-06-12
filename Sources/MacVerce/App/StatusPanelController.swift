@@ -249,6 +249,7 @@ final class StatusPanelController: NSObject, NSWindowDelegate {
 
         let openItem = NSMenuItem(title: "Open Mac Verce", action: #selector(openFromMenu), keyEquivalent: "")
         openItem.target = self
+        openItem.image = appMenuIcon()
         menu.addItem(openItem)
 
         let refreshItem = NSMenuItem(title: "Refresh", action: #selector(refreshFromMenu), keyEquivalent: "r")
@@ -275,6 +276,16 @@ final class StatusPanelController: NSObject, NSWindowDelegate {
         statusItem.menu = menu
         statusItem.button?.performClick(nil)
         statusItem.menu = nil
+    }
+
+    private func appMenuIcon() -> NSImage? {
+        guard let image = NSImage(named: "MacVerce") ?? NSApp.applicationIconImage else {
+            return nil
+        }
+
+        let copy = image.copy() as? NSImage
+        copy?.size = NSSize(width: 16, height: 16)
+        return copy
     }
 
     @objc private func openFromMenu() {
