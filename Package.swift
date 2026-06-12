@@ -10,13 +10,23 @@ let package = Package(
     products: [
         .executable(name: "MacVerce", targets: ["MacVerce"])
     ],
+    dependencies: [
+        .package(url: "https://github.com/sparkle-project/Sparkle", from: "2.9.3")
+    ],
     targets: [
         .executableTarget(
             name: "MacVerce",
+            dependencies: [
+                .product(name: "Sparkle", package: "Sparkle")
+            ],
             path: "Sources/MacVerce",
             linkerSettings: [
                 .linkedFramework("Security"),
-                .linkedFramework("ServiceManagement")
+                .linkedFramework("ServiceManagement"),
+                .unsafeFlags([
+                    "-Xlinker", "-rpath",
+                    "-Xlinker", "@executable_path/../Frameworks"
+                ])
             ]
         )
     ]

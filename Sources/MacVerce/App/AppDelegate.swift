@@ -3,7 +3,7 @@ import AppKit
 @MainActor
 final class AppDelegate: NSObject, NSApplicationDelegate {
     private let settings = AppSettings()
-    private let updateChecker = UpdateChecker()
+    private let appUpdater = AppUpdater()
     private lazy var monitor = DeploymentMonitor(settings: settings)
     private lazy var notchController = NotchIslandController()
     private lazy var settingsWindowController = SettingsWindowController(settings: settings, monitor: monitor)
@@ -15,7 +15,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         statusPanelController = StatusPanelController(
             settings: settings,
             monitor: monitor,
-            updateChecker: updateChecker,
+            appUpdater: appUpdater,
             refresh: { [weak self] in self?.monitor.refreshNow() },
             openSettings: { [weak self] in self?.settingsWindowController.showWindow(nil) },
             quit: { NSApp.terminate(nil) }

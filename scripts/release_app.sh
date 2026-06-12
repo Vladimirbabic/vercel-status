@@ -18,7 +18,7 @@ ZIP_PATH="$ASSET_DIR/MacVerce-v$VERSION.zip"
 
 mkdir -p "$ASSET_DIR"
 rm -f "$ZIP_PATH"
-ditto -c -k --keepParent "$APP_DIR" "$ZIP_PATH"
+ditto -c -k --sequesterRsrc --keepParent "$APP_DIR" "$ZIP_PATH"
 
 xcrun notarytool submit "$ZIP_PATH" \
     --keychain-profile "$NOTARY_PROFILE" \
@@ -28,7 +28,7 @@ xcrun stapler staple "$APP_DIR"
 xcrun stapler validate "$APP_DIR"
 
 rm -f "$ZIP_PATH"
-ditto -c -k --keepParent "$APP_DIR" "$ZIP_PATH"
+ditto -c -k --sequesterRsrc --keepParent "$APP_DIR" "$ZIP_PATH"
 
 spctl -a -vvv -t execute "$APP_DIR"
 shasum -a 256 "$ZIP_PATH"

@@ -2,7 +2,7 @@
 
 Mac Verce is a native macOS menu bar app for watching Vercel deployments. It polls the Vercel REST API, shows a compact deployment indicator in the menu bar, and displays a top-center notch island toast whenever a deployment reaches `READY`.
 
-The menu bar panel includes manual refresh, settings, launch-at-login preferences, and a GitHub Releases update check.
+The menu bar panel includes manual refresh, settings, launch-at-login preferences, and Sparkle-powered automatic updates.
 
 ## Build
 

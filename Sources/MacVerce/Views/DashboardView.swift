@@ -12,7 +12,7 @@ struct DashboardView: View {
 
     @ObservedObject var settings: AppSettings
     @ObservedObject var monitor: DeploymentMonitor
-    @ObservedObject var updateChecker: UpdateChecker
+    @ObservedObject var appUpdater: AppUpdater
 
     let refresh: () -> Void
     let checkForUpdates: () -> Void
@@ -131,9 +131,9 @@ struct DashboardView: View {
         HStack(spacing: 14) {
             FooterIconButton(systemName: "gearshape", help: "Settings", action: openSettings)
             FooterIconButton(
-                systemName: updateChecker.isChecking ? "hourglass" : "arrow.down.circle",
+                systemName: "arrow.triangle.2.circlepath.circle",
                 help: "Check for Updates",
-                isDisabled: updateChecker.isChecking,
+                isDisabled: !appUpdater.canCheckForUpdates,
                 action: checkForUpdates
             )
 
