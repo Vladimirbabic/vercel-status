@@ -6,23 +6,23 @@
         <description>Release feed for Vibe Check.</description>
         <language>en</language>
         <item>
-            <title>Vibe Check 0.1.7</title>
+            <title>Vibe Check 0.1.8</title>
             <description><![CDATA[
-                <p>Vibe Check 0.1.7 adjusts deployment notifications for notched and non-notched screens.</p>
+                <p>Vibe Check 0.1.8 fixes deployment row spacing in the menu panel.</p>
                 <ul>
-                    <li>Detects notched displays using safe-area and auxiliary menu bar geometry.</li>
-                    <li>Positions deployment-ready notifications closer to the notch on notched screens.</li>
-                    <li>Uses a more standard top offset on non-notched screens.</li>
+                    <li>Keeps deployment rows at a consistent compact height.</li>
+                    <li>Prevents list items from stretching inside the scroll view.</li>
+                    <li>Makes only the arrow control open a deployment.</li>
                 </ul>
             ]]></description>
-            <pubDate>Sat, 13 Jun 2026 16:48:33 +0000</pubDate>
-            <sparkle:version>8</sparkle:version>
-            <sparkle:shortVersionString>0.1.7</sparkle:shortVersionString>
+            <pubDate>Sat, 13 Jun 2026 16:55:22 +0000</pubDate>
+            <sparkle:version>9</sparkle:version>
+            <sparkle:shortVersionString>0.1.8</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
             <enclosure
-                url="https://github.com/Vladimirbabic/vercel-status/releases/download/v0.1.7/VibeCheck-v0.1.7.zip"
-                sparkle:edSignature="6W2Kss2EnZxF2l1JEsPfEN35PLMjNcGvj68e89uT/HuItshtBb76pJIblmGFbnukx77FKRKgCcblSfTKkL2vBg=="
-                length="3315798"
+                url="https://github.com/Vladimirbabic/vercel-status/releases/download/v0.1.8/VibeCheck-v0.1.8.zip"
+                sparkle:edSignature="xYdXFy5DjFfL85JC6nkTcZU8zJTXHGaR/tunF5aA9hyAnDkTMUmEQUDq63yZ9TvPXawmKkxc3r00TRJ4QG1jAQ=="
+                length="3316267"
                 type="application/octet-stream" />
         </item>
     </channel>

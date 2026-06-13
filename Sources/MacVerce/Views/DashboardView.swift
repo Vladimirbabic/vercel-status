@@ -117,7 +117,7 @@ struct DashboardView: View {
             }
         } else {
             ScrollView {
-                LazyVStack(spacing: 0) {
+                VStack(spacing: 0) {
                     ForEach(monitor.deployments) { deployment in
                         DeploymentRowView(deployment: deployment)
 
@@ -127,8 +127,10 @@ struct DashboardView: View {
                         }
                     }
                 }
+                .frame(maxWidth: .infinity, alignment: .top)
             }
             .scrollIndicators(.hidden)
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         }
     }
 
@@ -264,44 +266,41 @@ private struct PanelRowView: View {
     let action: (() -> Void)?
 
     var body: some View {
-        Button {
-            action?()
-        } label: {
-            HStack(spacing: 18) {
-                Image(systemName: systemName)
-                    .font(.system(size: 20, weight: .semibold))
-                    .foregroundStyle(PanelTheme.icon)
-                    .frame(width: 46)
+        HStack(spacing: 18) {
+            Image(systemName: systemName)
+                .font(.system(size: 20, weight: .semibold))
+                .foregroundStyle(PanelTheme.icon)
+                .frame(width: 46)
+                .frame(maxHeight: .infinity)
 
-                VStack(alignment: .leading, spacing: 3) {
-                    Text(title)
-                        .font(.system(size: 15, weight: .bold))
-                        .foregroundStyle(PanelTheme.primaryText)
-                        .lineLimit(1)
-                        .truncationMode(.tail)
+            VStack(alignment: .leading, spacing: 3) {
+                Text(title)
+                    .font(.system(size: 15, weight: .bold))
+                    .foregroundStyle(PanelTheme.primaryText)
+                    .lineLimit(1)
+                    .truncationMode(.tail)
 
-                    Text(subtitle)
-                        .font(.system(size: 11, weight: .semibold))
-                        .foregroundStyle(PanelTheme.secondaryText)
-                        .lineLimit(1)
-                        .truncationMode(.tail)
-                }
-
-                Spacer(minLength: 10)
-
-                PanelPillButton(
-                    systemName: actionSystemName,
-                    help: title,
-                    tint: action == nil ? PanelTheme.disabledControl : actionTint,
-                    action: action ?? {}
-                )
-                .allowsHitTesting(action != nil)
+                Text(subtitle)
+                    .font(.system(size: 11, weight: .semibold))
+                    .foregroundStyle(PanelTheme.secondaryText)
+                    .lineLimit(1)
+                    .truncationMode(.tail)
             }
-            .frame(height: 66)
-            .padding(.horizontal, 20)
-            .contentShape(Rectangle())
+
+            Spacer(minLength: 10)
+
+            PanelPillButton(
+                systemName: actionSystemName,
+                help: title,
+                tint: action == nil ? PanelTheme.disabledControl : actionTint,
+                action: action ?? {}
+            )
+            .allowsHitTesting(action != nil)
         }
-        .buttonStyle(.plain)
+        .padding(.horizontal, 20)
+        .frame(height: 66)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .contentShape(Rectangle())
     }
 }
 
