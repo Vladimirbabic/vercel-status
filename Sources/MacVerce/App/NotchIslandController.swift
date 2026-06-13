@@ -3,6 +3,9 @@ import SwiftUI
 
 @MainActor
 final class NotchIslandController {
+    private static let notchTopOffset: CGFloat = 8
+    private static let standardTopOffset: CGFloat = 18
+
     private var window: NSWindow?
     private var dismissTask: Task<Void, Never>?
 
@@ -66,7 +69,19 @@ final class NotchIslandController {
         let screen = NSScreen.main ?? NSScreen.screens.first
         let visibleFrame = screen?.visibleFrame ?? NSRect(x: 0, y: 0, width: 1440, height: 900)
         let x = visibleFrame.midX - size.width / 2
-        let y = visibleFrame.maxY - size.height - 10
+        let y = if screen?.hasNotch == true {
+            visibleFrame.maxY - size.height - Self.notchTopOffset
+        } else {
+            visibleFrame.maxY - size.height - Self.standardTopOffset
+        }
         return NSRect(x: x, y: y, width: size.width, height: size.height)
+    }
+}
+
+private extension NSScreen {
+    var hasNotch: Bool {
+        safeAreaInsets.top > 0 ||
+            !(auxiliaryTopLeftArea?.isEmpty ?? true) ||
+            !(auxiliaryTopRightArea?.isEmpty ?? true)
     }
 }

@@ -6,22 +6,23 @@
         <description>Release feed for Vibe Check.</description>
         <language>en</language>
         <item>
-            <title>Vibe Check 0.1.6</title>
+            <title>Vibe Check 0.1.7</title>
             <description><![CDATA[
-                <p>Vibe Check 0.1.6 updates the app name and branding.</p>
+                <p>Vibe Check 0.1.7 adjusts deployment notifications for notched and non-notched screens.</p>
                 <ul>
-                    <li>Updates the app display name, settings title, panel title, menu-bar label, and accessibility labels.</li>
-                    <li>Keeps the existing bundle identifier and executable stable for Sparkle update compatibility.</li>
+                    <li>Detects notched displays using safe-area and auxiliary menu bar geometry.</li>
+                    <li>Positions deployment-ready notifications closer to the notch on notched screens.</li>
+                    <li>Uses a more standard top offset on non-notched screens.</li>
                 </ul>
             ]]></description>
-            <pubDate>Sat, 13 Jun 2026 16:30:11 +0000</pubDate>
-            <sparkle:version>7</sparkle:version>
-            <sparkle:shortVersionString>0.1.6</sparkle:shortVersionString>
+            <pubDate>Sat, 13 Jun 2026 16:48:33 +0000</pubDate>
+            <sparkle:version>8</sparkle:version>
+            <sparkle:shortVersionString>0.1.7</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
             <enclosure
-                url="https://github.com/Vladimirbabic/vercel-status/releases/download/v0.1.6/VibeCheck-v0.1.6.zip"
-                sparkle:edSignature="5Eq5ISpe9/OGksO0KpgxwYUHxkDuD5UwE+pQtkEWkoN709auiwJyDreCezIjpS/hJh+M0jcqh8eL0mJzpiVFBw=="
-                length="3315484"
+                url="https://github.com/Vladimirbabic/vercel-status/releases/download/v0.1.7/VibeCheck-v0.1.7.zip"
+                sparkle:edSignature="6W2Kss2EnZxF2l1JEsPfEN35PLMjNcGvj68e89uT/HuItshtBb76pJIblmGFbnukx77FKRKgCcblSfTKkL2vBg=="
+                length="3315798"
                 type="application/octet-stream" />
         </item>
     </channel>
