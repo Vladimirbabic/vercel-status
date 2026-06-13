@@ -103,16 +103,16 @@ final class DeploymentMonitor: ObservableObject {
     var menuBarToolTip: String {
         switch status {
         case .needsConfiguration:
-            "Mac Verce: add a Vercel access token"
+            "Vibe Check: add a Vercel access token"
         case .refreshing:
-            "Mac Verce: refreshing deployments"
+            "Vibe Check: refreshing deployments"
         case let .failed(message):
-            "Mac Verce: \(message)"
+            "Vibe Check: \(message)"
         case .idle:
             if let latest = deployments.first {
-                "Mac Verce: \(latest.name) is \(latest.state.title.lowercased())"
+                "Vibe Check: \(latest.name) is \(latest.state.title.lowercased())"
             } else {
-                "Mac Verce: no deployments"
+                "Vibe Check: no deployments"
             }
         }
     }

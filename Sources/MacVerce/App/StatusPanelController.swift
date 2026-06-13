@@ -65,7 +65,7 @@ final class StatusPanelController: NSObject, NSWindowDelegate {
         )
         title.append(
             NSAttributedString(
-                string: "Vercel",
+                string: "Vibe",
                 attributes: [
                     .foregroundColor: NSColor.labelColor,
                     .font: NSFont.systemFont(ofSize: 12, weight: .medium)
@@ -110,7 +110,7 @@ final class StatusPanelController: NSObject, NSWindowDelegate {
 
         button.attributedTitle = title
         button.toolTip = monitor.menuBarToolTip
-        button.setAccessibilityLabel("Mac Verce: deployment in progress")
+        button.setAccessibilityLabel("Vibe Check: deployment in progress")
     }
 
     private func startLoaderTimer() {
@@ -247,7 +247,7 @@ final class StatusPanelController: NSObject, NSWindowDelegate {
     private func showContextMenu() {
         let menu = NSMenu()
 
-        let openItem = NSMenuItem(title: "Open Mac Verce", action: #selector(openFromMenu), keyEquivalent: "")
+        let openItem = NSMenuItem(title: "Open Vibe Check", action: #selector(openFromMenu), keyEquivalent: "")
         openItem.target = self
         openItem.image = appMenuIcon()
         menu.addItem(openItem)
@@ -269,7 +269,7 @@ final class StatusPanelController: NSObject, NSWindowDelegate {
 
         menu.addItem(.separator())
 
-        let quitItem = NSMenuItem(title: "Quit Mac Verce", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q")
+        let quitItem = NSMenuItem(title: "Quit Vibe Check", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q")
         quitItem.target = NSApp
         menu.addItem(quitItem)
 

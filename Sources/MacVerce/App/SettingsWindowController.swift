@@ -14,7 +14,7 @@ final class SettingsWindowController: NSWindowController {
             backing: .buffered,
             defer: false
         )
-        window.title = "Mac Verce Settings"
+        window.title = "Vibe Check Settings"
         window.contentView = hosting
         window.isReleasedWhenClosed = false
         window.center()

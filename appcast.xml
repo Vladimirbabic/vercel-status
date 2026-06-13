@@ -1,28 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle">
     <channel>
-        <title>Mac Verce Updates</title>
+        <title>Vibe Check Updates</title>
         <link>https://github.com/Vladimirbabic/vercel-status/releases</link>
-        <description>Release feed for Mac Verce.</description>
+        <description>Release feed for Vibe Check.</description>
         <language>en</language>
         <item>
-            <title>Mac Verce 0.1.5</title>
+            <title>Vibe Check 0.1.6</title>
             <description><![CDATA[
-                <p>Mac Verce 0.1.5 tightens the menu bar building indicator.</p>
+                <p>Vibe Check 0.1.6 updates the app name and branding.</p>
                 <ul>
-                    <li>Reduces the deployment-in-progress indicator from 10 bars to 5.</li>
-                    <li>Uses a denser bar glyph with smaller visual gaps.</li>
-                    <li>Keeps the animation cycle aligned with the shorter indicator.</li>
+                    <li>Updates the app display name, settings title, panel title, menu-bar label, and accessibility labels.</li>
+                    <li>Keeps the existing bundle identifier and executable stable for Sparkle update compatibility.</li>
                 </ul>
             ]]></description>
-            <pubDate>Fri, 12 Jun 2026 21:21:25 +0000</pubDate>
-            <sparkle:version>6</sparkle:version>
-            <sparkle:shortVersionString>0.1.5</sparkle:shortVersionString>
+            <pubDate>Sat, 13 Jun 2026 16:30:11 +0000</pubDate>
+            <sparkle:version>7</sparkle:version>
+            <sparkle:shortVersionString>0.1.6</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
             <enclosure
-                url="https://github.com/Vladimirbabic/vercel-status/releases/download/v0.1.5/MacVerce-v0.1.5.zip"
-                sparkle:edSignature="ML3kmwAbD99EIknJOyVtAjZZvRN8qZzOsDpTIfu1wz4e9b3yHnB9zVgSO5m/mmq1ItI2vvvAuXTANfJbv8kjDA=="
-                length="3313830"
+                url="https://github.com/Vladimirbabic/vercel-status/releases/download/v0.1.6/VibeCheck-v0.1.6.zip"
+                sparkle:edSignature="5Eq5ISpe9/OGksO0KpgxwYUHxkDuD5UwE+pQtkEWkoN709auiwJyDreCezIjpS/hJh+M0jcqh8eL0mJzpiVFBw=="
+                length="3315484"
                 type="application/octet-stream" />
         </item>
     </channel>

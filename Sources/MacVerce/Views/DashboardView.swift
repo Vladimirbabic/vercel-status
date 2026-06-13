@@ -53,7 +53,7 @@ struct DashboardView: View {
 
             VStack(alignment: .leading, spacing: 3) {
                 HStack(spacing: 7) {
-                    Text("Mac Verce")
+                    Text("Vibe Check")
                         .font(.system(size: 16, weight: .bold))
                         .foregroundStyle(PanelTheme.primaryText)
 

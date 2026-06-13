@@ -6,7 +6,8 @@ cd "$ROOT_DIR"
 
 swift build -c release
 BIN_DIR="$(swift build -c release --show-bin-path)"
-APP_DIR="$ROOT_DIR/.build/MacVerce.app"
+APP_BUNDLE_NAME="${APP_BUNDLE_NAME:-Vibe Check}"
+APP_DIR="$ROOT_DIR/.build/$APP_BUNDLE_NAME.app"
 SIGN_IDENTITY="${SIGN_IDENTITY:--}"
 
 rm -rf "$APP_DIR"
